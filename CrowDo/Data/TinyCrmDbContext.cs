@@ -1,19 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TinyCrm.Core.Data
+namespace CrowDo.Core.Data
 {
-    public class TinyCrmDbContext : DbContext
+    public class CrowDoDbContext : DbContext
     {
         private readonly string connectionString_;
 
-        public TinyCrmDbContext()
+        public CrowDoDbContext()
         {
             connectionString_ =
                 "Server =localhost; Database =crowDo; " +
                 "Integrated Security=SSPI;Persist Security Info=False;";
         }
 
-        public TinyCrmDbContext(string connString)
+        public CrowDoDbContext(string connString)
         {
             connectionString_ = connString;
         }
@@ -27,7 +27,7 @@ namespace TinyCrm.Core.Data
                 .ToTable("User", "core");
             
             modelBuilder
-                .Entity<CrowDo.Models.Funding>()
+                .Entity<CrowDo.Models.FundingPackage>()
                 .ToTable("Funding", "core");
             
             modelBuilder

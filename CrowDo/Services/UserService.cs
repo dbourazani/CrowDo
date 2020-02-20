@@ -4,16 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TinyCrm.Core.Data;
+using CrowDo.Core.Data;
 
 namespace CrowDo.Services
 {
-    public class UserService : IUserServive
+    public class UserService : IUserService
 
     {
-        private TinyCrmDbContext context;
+        private CrowDoDbContext context;
 
-        public UserService(TinyCrmDbContext dbContext)
+        public UserService(CrowDoDbContext dbContext)
         {
             context = dbContext;
         }
@@ -30,7 +30,7 @@ namespace CrowDo.Services
                 string.IsNullOrWhiteSpace(userOptions.Address) ||
                 string.IsNullOrWhiteSpace(userOptions.Email) ||
                 !userOptions.Email.Contains("@") ||
-                !userOptions.DateOfBirthYear.HasValue ||
+                !userOptions.YearOfBirth.HasValue ||
                 !userOptions.DateOfBirthMonth.HasValue ||
                 !userOptions.DateOfBirthDay.HasValue
                 )
@@ -44,9 +44,8 @@ namespace CrowDo.Services
                 LastName = userOptions.LastName,
                 Address = userOptions.Address,
                 Email = userOptions.Email,
-                DateOfBirthYear = userOptions.DateOfBirthYear,
-                DateOfBirthMonth= userOptions.DateOfBirthMonth,
-                DateOfBirthDay = userOptions.DateOfBirthDay
+                YearOfBirth = userOptions.YearOfBirth,
+              
             };
 
             context.Set<User>().Add(user);
@@ -54,7 +53,7 @@ namespace CrowDo.Services
             return user;
         }
 
-        public IQueryable<User> Search(SearchUserOptions userOptions)
+        public IQueryable<User> SearchUser(SearchUserOptions userOptions)
         {
             if (userOptions == null)
             {
@@ -96,24 +95,13 @@ namespace CrowDo.Services
                         .Where(c => c.Email == userOptions.Email);
             }
 
-            if (userOptions.DateOfBirthYear != null)
+            if (userOptions.YearOfBirth != null)
             {
                 query = query
-                        .Where(c => c.DateOfBirthYear == userOptions.DateOfBirthYear);
+                        .Where(c => c.YearOfBirth == userOptions.YearOfBirth);
             }
 
-            if (userOptions.DateOfBirthMonth != null)
-            {
-                query = query
-                        .Where(c => c.DateOfBirthMonth == userOptions.DateOfBirthMonth);
-            }
-
-            if (userOptions.DateOfBirthDay != null)
-            {
-                query = query
-                        .Where(c => c.DateOfBirthDay == userOptions.DateOfBirthDay);
-            }
-
+       
              return query;
         }
 
@@ -165,21 +153,12 @@ namespace CrowDo.Services
                 user.FirstName = options.FirstName;
             }
 
-            if (options.DateOfBirthYear != null)
+            if (options.YearOfBirth != null)
             {
-                user.DateOfBirthYear = options.DateOfBirthYear;
+                user.YearOfBirth = options.YearOfBirth;
             }
 
-            if (options.DateOfBirthMonth != null)
-            {
-                user.DateOfBirthMonth = options.DateOfBirthMonth;
-            }
-
-            if (options.DateOfBirthDay != null)
-            {
-                user.DateOfBirthDay = options.DateOfBirthDay;
-            }
-            
+   
             return true;
         }
     }

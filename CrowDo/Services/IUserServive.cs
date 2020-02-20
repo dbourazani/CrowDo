@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace CrowDo.Services
 {
-    public interface IUserServive
+    public interface IUserService
     {
         public User CreateUser(CreateUserOptions userOptions);
-        public IQueryable<User> Search(SearchUserOptions userOptions);
+        public IQueryable<User> SearchUser(SearchUserOptions userOptions);
         public User GetUserById(int id);
         public bool UpdateUser(int id,
             UpdateUserOptions options);

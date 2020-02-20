@@ -18,5 +18,6 @@ namespace CrowDo.Models
         public Category Category { get; set; }
         public DateTime CreationDate { get; set; }
         public StatusProject StatusProject { get; set; }
+        public List<FundingPackage> Fundings { get; set; }
     }
 }

@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace CrowDo.Models
 {
-    public class Funding
+    public class FundingPackage
     {
         public int Id { get; set; }
         public User User { get; set; }
         public Project Project { get; set; }
         public decimal Deposit { get; set; }
+        public string DescriptionGift { get; set; }
         public DateTime DepositDate { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace CrowDo.Options
     public enum StatusUser
     {
         Active = 0,
-        Inactice = 1
+        Inactive = 1
     }
 }

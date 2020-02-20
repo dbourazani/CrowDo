@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TinyCrm.Core.Data;
+using CrowDo.Core.Data;
 
 namespace CrowDo.Migrations
 {
-    [DbContext(typeof(TinyCrmDbContext))]
+    [DbContext(typeof(CrowDoDbContext))]
     partial class TinyCrmDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

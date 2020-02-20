@@ -12,11 +12,9 @@ namespace CrowDo.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public int? DateOfBirthYear { get; set; }
-        public int? DateOfBirthMonth { get; set; }
-        public int? DateOfBirthDay { get; set; }
+        public int? YearOfBirth { get; set; }
         public List<Project> Projects { get; set; }
-        public List<Funding> Fundings { get; set; }
+        public List<FundingPackage> Fundings { get; set; }
         public string Email { get; set; }
         public StatusUser Status { get; set; }
     }
