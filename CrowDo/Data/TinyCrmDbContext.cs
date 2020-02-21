@@ -25,7 +25,12 @@ namespace CrowDo.Core.Data
             modelBuilder
                 .Entity<CrowDo.Models.User>()
                 .ToTable("User", "core");
-            
+
+            modelBuilder
+                .Entity<CrowDo.Models.User>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+
             modelBuilder
                 .Entity<CrowDo.Models.FundingPackage>()
                 .ToTable("Funding", "core");

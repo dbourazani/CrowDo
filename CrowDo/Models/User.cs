@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
 namespace CrowDo.Models
 {
     public class User
@@ -17,5 +19,9 @@ namespace CrowDo.Models
         public List<FundingPackage> Fundings { get; set; }
         public string Email { get; set; }
         public StatusUser Status { get; set; }
+        public User()
+        {
+
+        }
     }
 }

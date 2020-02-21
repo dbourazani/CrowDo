@@ -8,6 +8,6 @@ namespace CrowDo.Models
     public enum StatusProject
     {
         Available = 0,
-        Unavalable = 1
+        Unavailable = 1
     }
 }

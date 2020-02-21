@@ -19,5 +19,9 @@ namespace CrowDo.Models
         public DateTime CreationDate { get; set; }
         public StatusProject StatusProject { get; set; }
         public List<FundingPackage> Fundings { get; set; }
+        public Project()
+        {
+            CreationDate = DateTime.Now;
+        }
     }
 }

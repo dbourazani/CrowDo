@@ -13,8 +13,5 @@ namespace CrowDo.Options
         public string Address { get; set; }
         public string Email { get; set; }
         public int? YearOfBirth { get; set; }
-        public int? DateOfBirthMonth { get; set; }
-        public int? DateOfBirthDay { get; set; }
-        
     }
 }

@@ -30,10 +30,7 @@ namespace CrowDo.Services
                 string.IsNullOrWhiteSpace(userOptions.Address) ||
                 string.IsNullOrWhiteSpace(userOptions.Email) ||
                 !userOptions.Email.Contains("@") ||
-                !userOptions.YearOfBirth.HasValue ||
-                !userOptions.DateOfBirthMonth.HasValue ||
-                !userOptions.DateOfBirthDay.HasValue
-                )
+                !userOptions.YearOfBirth.HasValue)
             {
                 return null;
             }
