@@ -2,7 +2,7 @@
 
 namespace CrowDo.Migrations
 {
-    public partial class initial : Migration
+    public partial class test4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

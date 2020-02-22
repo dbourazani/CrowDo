@@ -18,7 +18,7 @@ namespace CrowDo.Models
         public List<Project> Projects { get; set; }
         public string Email { get; set; }
         public StatusUser Status { get; set; }
-       // public List<ProjectFundingPackage> ProjectFundingPackages { get; set; } 
+        //public List<ProjectFundingPackage> ProjectFundingPackages { get; set; } 
         //public User()
         //{
         //    Projects = new List<Project>();

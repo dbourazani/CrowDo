@@ -28,12 +28,16 @@ namespace CrowDo
         {
             services.AddControllers();
             services.AddDbContext<CrowDoDbContext>();
-            services.AddScoped<IExcelIO,ExcelIO>();
+            //services.AddScoped<IExcelIO,ExcelIO>();
 
             //Scoped : otan xreiastei na xrhsimopoih8ei
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
-            services.AddScoped<IFundingPackageService, FundingPackageService>();
+            services.AddScoped<IFundingPackageService, FundingPackageService>(
+                sp => new FundingPackageService(
+                    sp.GetService<CrowDoDbContext>(),
+                    sp.GetService<IUserService>(),
+                    sp.GetService<IProjectService>()));
 
             //STEP 1 OF 2
             //within Startup.cs  

@@ -15,30 +15,35 @@ namespace CrowDo.Controllers
     [Route("[controller]")]
     public class CrowDoController : ControllerBase
     {
-        private readonly IExcelIO _excelIO;
+        //private readonly IExcelIO _excelIO;
         private readonly ILogger<CrowDoController> _logger;
         private readonly IProjectService _projectService;
         private readonly IFundingPackageService _fundingPackageService;
         private readonly IUserService _userService;
         public CrowDoController(ILogger<CrowDoController> logger,
-            IExcelIO excelIO,
+            //IExcelIO excelIO,
             IFundingPackageService fundingPackageService,
             IProjectService projectService,
             IUserService userService)
         {
             _logger = logger;
-            _excelIO = excelIO;
+            //_excelIO = excelIO;
             _projectService = projectService;
             _fundingPackageService = fundingPackageService;
             _userService = userService;
         }
 
 
-        [HttpGet("users / excel /{filename}")]
-        public List<User> GetCustomersFromExcel([FromRoute] string fileName)
+        //[HttpGet("users / excel /{filename}")]
+        //public List<User> GetCustomersFromExcel([FromRoute] string fileName)
+        //{
+        //    var excelIO = new ExcelIO(new CrowDoDbContext());
+        //    return excelIO.ReadExcel(fileName);
+        //}
+        [HttpGet]
+        public string GetInfo()
         {
-            var excelIO = new ExcelIO(new CrowDoDbContext());
-            return excelIO.ReadExcel(fileName);
+            return "CrowDo";
         }
 
         [HttpGet("users")]

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowDo.Migrations
 {
     [DbContext(typeof(CrowDoDbContext))]
-    [Migration("20200222151702_initail")]
-    partial class initail
+    [Migration("20200222185119_test4")]
+    partial class test4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,16 +90,11 @@ namespace CrowDo.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FundingPackageId");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ProjectFundingPackage","core");
                 });
@@ -148,7 +143,7 @@ namespace CrowDo.Migrations
             modelBuilder.Entity("CrowDo.Models.ProjectFundingPackage", b =>
                 {
                     b.HasOne("CrowDo.Models.FundingPackage", "FundingPackage")
-                        .WithMany("ProjectFundingPackage")
+                        .WithMany()
                         .HasForeignKey("FundingPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -156,12 +151,6 @@ namespace CrowDo.Migrations
                     b.HasOne("CrowDo.Models.Project", "Project")
                         .WithMany("ProjectFundingPackages")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CrowDo.Models.User", "User")
-                        .WithMany("ProjectFundingPackages")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
