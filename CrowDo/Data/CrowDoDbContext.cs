@@ -33,23 +33,15 @@ namespace CrowDo.Core.Data
 
             modelBuilder
                 .Entity<CrowDo.Models.FundingPackage>()
-                .ToTable("Funding", "core");
-            
+                .ToTable("FundingPackage", "core");
+                
+            modelBuilder
+                .Entity<CrowDo.Models.ProjectFundingPackage>()
+                .ToTable("ProjectFundingPackage", "core");
+
             modelBuilder
                 .Entity<CrowDo.Models.Project>()
                 .ToTable("Project", "core");
-
-            modelBuilder
-                .Entity<CrowDo.Models.Project>()
-                .HasIndex(c => c.VatNumber)
-                .IsUnique();
-
-            modelBuilder
-                .Entity<CrowDo.Models.Project>()
-                .Property(c => c.VatNumber)
-                .HasMaxLength(9)
-                .IsFixedLength();
- 
 
         }
         protected override void OnConfiguring(

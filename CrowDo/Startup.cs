@@ -32,6 +32,25 @@ namespace CrowDo
 
             //Scoped : otan xreiastei na xrhsimopoih8ei
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IFundingPackageService, FundingPackageService>();
+
+            //STEP 1 OF 2
+            //within Startup.cs  
+            // method ConfigureServices
+            // add the following code before the end of the method
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
+
+            //////////////////
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +64,17 @@ namespace CrowDo
             app.UseRouting();
 
             app.UseAuthorization();
+
+
+            //STEP 2 OF 2
+            //within Startup.cs  
+            // method Configure
+            // add the following code before the app.UseEndpoints ...
+
+
+            app.UseCors();
+
+            ///////////////
 
             app.UseEndpoints(endpoints =>
             {

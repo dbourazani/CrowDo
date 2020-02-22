@@ -16,12 +16,12 @@ namespace CrowDo.Models
         public string Address { get; set; }
         public int? YearOfBirth { get; set; }
         public List<Project> Projects { get; set; }
-        public List<FundingPackage> Fundings { get; set; }
         public string Email { get; set; }
         public StatusUser Status { get; set; }
-        public User()
-        {
-
-        }
+       // public List<ProjectFundingPackage> ProjectFundingPackages { get; set; } 
+        //public User()
+        //{
+        //    Projects = new List<Project>();
+        //}
     }
 }

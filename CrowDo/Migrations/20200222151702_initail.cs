@@ -3,12 +3,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrowDo.Migrations
 {
-    public partial class initial : Migration
+    public partial class initail : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "core");
+
+            migrationBuilder.CreateTable(
+                name: "FundingPackage",
+                schema: "core",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Deposit = table.Column<decimal>(nullable: false),
+                    DescriptionGift = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FundingPackage", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "User",
@@ -20,9 +35,7 @@ namespace CrowDo.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    DateOfBirthYear = table.Column<int>(nullable: true),
-                    DateOfBirthMonth = table.Column<int>(nullable: true),
-                    DateOfBirthDay = table.Column<int>(nullable: true),
+                    YearOfBirth = table.Column<int>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
@@ -39,8 +52,6 @@ namespace CrowDo.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    VatNumber = table.Column<string>(fixedLength: true, maxLength: 9, nullable: true),
                     Budget = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: true),
@@ -61,47 +72,42 @@ namespace CrowDo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funding",
+                name: "ProjectFundingPackage",
                 schema: "core",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: true),
-                    ProjectId = table.Column<int>(nullable: true),
-                    Deposit = table.Column<decimal>(nullable: false),
+                    ProjectId = table.Column<int>(nullable: false),
+                    FundingPackageId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     DepositDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funding", x => x.Id);
+                    table.PrimaryKey("PK_ProjectFundingPackage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funding_Project_ProjectId",
+                        name: "FK_ProjectFundingPackage_FundingPackage_FundingPackageId",
+                        column: x => x.FundingPackageId,
+                        principalSchema: "core",
+                        principalTable: "FundingPackage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectFundingPackage_Project_ProjectId",
                         column: x => x.ProjectId,
                         principalSchema: "core",
                         principalTable: "Project",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Funding_User_UserId",
+                        name: "FK_ProjectFundingPackage_User_UserId",
                         column: x => x.UserId,
                         principalSchema: "core",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Funding_ProjectId",
-                schema: "core",
-                table: "Funding",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Funding_UserId",
-                schema: "core",
-                table: "Funding",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Project_UserId",
@@ -110,18 +116,40 @@ namespace CrowDo.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_VatNumber",
+                name: "IX_ProjectFundingPackage_FundingPackageId",
                 schema: "core",
-                table: "Project",
-                column: "VatNumber",
+                table: "ProjectFundingPackage",
+                column: "FundingPackageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectFundingPackage_ProjectId",
+                schema: "core",
+                table: "ProjectFundingPackage",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectFundingPackage_UserId",
+                schema: "core",
+                table: "ProjectFundingPackage",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Email",
+                schema: "core",
+                table: "User",
+                column: "Email",
                 unique: true,
-                filter: "[VatNumber] IS NOT NULL");
+                filter: "[Email] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Funding",
+                name: "ProjectFundingPackage",
+                schema: "core");
+
+            migrationBuilder.DropTable(
+                name: "FundingPackage",
                 schema: "core");
 
             migrationBuilder.DropTable(

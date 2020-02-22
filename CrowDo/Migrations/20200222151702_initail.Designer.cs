@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrowDo.Migrations
 {
     [DbContext(typeof(CrowDoDbContext))]
-    [Migration("20200220180728_correctionClasses")]
-    partial class correctionClasses
+    [Migration("20200222151702_initail")]
+    partial class initail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,25 +31,12 @@ namespace CrowDo.Migrations
                     b.Property<decimal>("Deposit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("DepositDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("DescriptionGift")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Funding","core");
+                    b.ToTable("FundingPackage","core");
                 });
 
             modelBuilder.Entity("CrowDo.Models.Project", b =>
@@ -58,9 +45,6 @@ namespace CrowDo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Budget")
                         .HasColumnType("decimal(18,2)");
@@ -83,20 +67,41 @@ namespace CrowDo.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("VatNumber")
-                        .HasColumnType("nchar(9)")
-                        .IsFixedLength(true)
-                        .HasMaxLength(9);
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VatNumber")
-                        .IsUnique()
-                        .HasFilter("[VatNumber] IS NOT NULL");
-
                     b.ToTable("Project","core");
+                });
+
+            modelBuilder.Entity("CrowDo.Models.ProjectFundingPackage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DepositDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FundingPackageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FundingPackageId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectFundingPackage","core");
                 });
 
             modelBuilder.Entity("CrowDo.Models.User", b =>
@@ -133,22 +138,32 @@ namespace CrowDo.Migrations
                     b.ToTable("User","core");
                 });
 
-            modelBuilder.Entity("CrowDo.Models.FundingPackage", b =>
-                {
-                    b.HasOne("CrowDo.Models.Project", "Project")
-                        .WithMany("Fundings")
-                        .HasForeignKey("ProjectId");
-
-                    b.HasOne("CrowDo.Models.User", "User")
-                        .WithMany("Fundings")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("CrowDo.Models.Project", b =>
                 {
                     b.HasOne("CrowDo.Models.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("CrowDo.Models.ProjectFundingPackage", b =>
+                {
+                    b.HasOne("CrowDo.Models.FundingPackage", "FundingPackage")
+                        .WithMany("ProjectFundingPackage")
+                        .HasForeignKey("FundingPackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CrowDo.Models.Project", "Project")
+                        .WithMany("ProjectFundingPackages")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CrowDo.Models.User", "User")
+                        .WithMany("ProjectFundingPackages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

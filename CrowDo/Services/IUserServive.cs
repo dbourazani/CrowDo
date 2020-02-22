@@ -10,9 +10,10 @@ namespace CrowDo.Services
     public interface IUserService
     {
         public User CreateUser(CreateUserOptions userOptions);
-        public IQueryable<User> SearchUser(SearchUserOptions userOptions);
+        public List<User> SearchUser(SearchUserOptions userOptions);
         public User GetUserById(int id);
-        public bool UpdateUser(int id,
+        public User UpdateUser(int id,
             UpdateUserOptions options);
+        public List<User> GetUsers();
     }
 }

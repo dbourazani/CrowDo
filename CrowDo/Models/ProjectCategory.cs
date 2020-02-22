@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CrowDo.Options
 {
-    public enum Category
+    public enum ProjectCategory
     {
         Invalid = 0,
         Art = 1,

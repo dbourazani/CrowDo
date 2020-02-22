@@ -11,11 +11,11 @@ namespace CrowDo.Services
     public class UserService : IUserService
 
     {
-        private CrowDoDbContext context;
+        private readonly CrowDoDbContext context_;
 
-        public UserService(CrowDoDbContext dbContext)
+        public UserService(CrowDoDbContext context)
         {
-            context = dbContext;
+            context_ = context;
         }
         public User CreateUser(CreateUserOptions userOptions)
         {
@@ -45,19 +45,26 @@ namespace CrowDo.Services
               
             };
 
-            context.Set<User>().Add(user);
-            context.SaveChanges();
+            context_.Set<User>().Add(user);
+            context_.SaveChanges();
             return user;
         }
 
-        public IQueryable<User> SearchUser(SearchUserOptions userOptions)
+        public List<User> GetUsers()
+        {
+            return context_.Set<User>()
+                    .ToList();
+        }
+
+
+        public List<User> SearchUser(SearchUserOptions userOptions)
         {
             if (userOptions == null)
             {
                 return null;
             }
 
-            var query = context
+            var query = context_
                .Set<User>()
                .AsQueryable();
 
@@ -79,32 +86,19 @@ namespace CrowDo.Services
                         .Where(c => c.LastName == userOptions.LastName);
             }
 
-            if (userOptions.Address != null)
-            {
-                query = query
-                        .Where(c => c.Address == userOptions.Address);
-            }
-
             if (userOptions.Email != null ||
                 userOptions.Email.Contains("@"))
             {
                 query = query
                         .Where(c => c.Email == userOptions.Email);
             }
-
-            if (userOptions.YearOfBirth != null)
-            {
-                query = query
-                        .Where(c => c.YearOfBirth == userOptions.YearOfBirth);
-            }
-
        
-             return query;
+             return query.ToList();
         }
 
         public User GetUserById(int id)
         {
-            var user = context
+            var user = context_
                 .Set<User>()
                 .SingleOrDefault(s => s.Id == id);
 
@@ -116,18 +110,18 @@ namespace CrowDo.Services
             return user;
         }
 
-        public bool UpdateUser(int id,
+        public User UpdateUser(int id,
             UpdateUserOptions options)
         {
             if (options == null)
             {
-                return false;
+                return null;
             }
 
             var user = GetUserById(id);
             if (user == null)
             {
-                return false;
+                return null;
             }
             
             if (!string.IsNullOrWhiteSpace(options.FirstName))
@@ -156,7 +150,7 @@ namespace CrowDo.Services
             }
 
    
-            return true;
+            return user;
         }
     }
 }
